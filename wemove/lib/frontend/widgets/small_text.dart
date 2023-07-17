@@ -5,12 +5,14 @@ class AppSmallText extends StatelessWidget {
   final double size;
   final Color? color;
   final FontWeight? fontWeight;
+  final TextAlign textAlign;
   const AppSmallText({
     Key? key,
     required this.text,
     required this.size,
     this.color,
     this.fontWeight = FontWeight.w300,
+    this.textAlign = TextAlign.left,
   }) : super(key: key);
 
   @override

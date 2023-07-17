@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:wemove/frontend/pages/home/homepage.dart';
+import 'package:beamer/beamer.dart';
+import 'package:wemove/frontend/pages/complain/complains.dart';
 
-class Navigation {
-  GoRouter goRouter = GoRouter(
-    routes: [
-      GoRoute(
-        path: '/',
-        pageBuilder: (context, state) {
-          return MaterialPage(
-            child: HomePage(),
-          );
-        },
-      ),
-    ],
+import 'frontend/pages/book-ticket/book_ticket.dart';
+import 'frontend/pages/home/homepage.dart';
+
+class AppNavigation {
+  final routerDelegate = BeamerDelegate(
+    initialPath: '/',
+    locationBuilder: RoutesLocationBuilder(
+      routes: {
+        '/': (context, state, data) => HomePage(),
+        '/book-ticket': (context, state, data) => BookTicket(),
+        '/complain': (context, state, data) => Complain(),
+      },
+    ),
   );
 }

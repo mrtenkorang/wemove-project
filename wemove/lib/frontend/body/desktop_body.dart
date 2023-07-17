@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:wemove/frontend/widgets/big_text.dart';
 import 'package:wemove/frontend/widgets/button.dart';
@@ -22,8 +23,8 @@ class DesktopBody extends StatelessWidget {
                 children: [
                   BigText(
                     text: 'Transportation\nmade easy',
-                    size: 50,
-                    color: Colors.black,
+                    bigTextSize: 50,
+                    textColor: Colors.black,
                     fontWeight: FontWeight.w900,
                   ),
                   AppSmallText(
@@ -38,7 +39,7 @@ class DesktopBody extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 100),
                     child: AppButton(
                       onPressed: () {
-                        //TODO: Take you to book ticket page
+                        Beamer.of(context).beamToNamed('/book-ticket');
                       },
                       buttonLabelText: 'Book Ticket',
                       textSize: 20,

@@ -15,8 +15,8 @@ class MobileNavBar extends StatelessWidget {
           BigText(
             text: 'WEMOVE',
             fontWeight: FontWeight.w900,
-            size: 30,
-            color: Colors.green,
+            bigTextSize: 30,
+            textColor: Colors.green,
           ),
           SizedBox(
             height: 30,
@@ -25,16 +25,19 @@ class MobileNavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppTextButton(
+                onPressed: () {},
                 text: 'Tickets',
                 size: 20,
                 color: Colors.green,
               ),
               AppTextButton(
+                onPressed: () {},
                 text: 'Complain',
                 size: 20,
                 color: Colors.green,
               ),
               AppTextButton(
+                onPressed: () {},
                 text: 'Profile',
                 size: 20,
                 color: Colors.green,

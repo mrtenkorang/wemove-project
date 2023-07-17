@@ -1,22 +1,44 @@
+import 'package:beamer/beamer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wemove/navigations.dart';
 
-import 'frontend/pages/book-ticket/book_ticket.dart';
-
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyBOi9B6iVBz3y0RkgSBCr4_nyR6FZTR03E",
+        authDomain: "move-2faa1.firebaseapp.com",
+        projectId: "move-2faa1",
+        storageBucket: "move-2faa1.appspot.com",
+        messagingSenderId: "769017954863",
+        appId: "1:769017954863:web:ae29f8ad412d8bd1567cda"),
+  );
+  runApp(const WeMove());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class WeMove extends StatelessWidget {
+  const WeMove({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final colorScheme = Theme.of(context).colorScheme.copyWith(
+          secondary: Colors.green, // Customize the secondary color
+          // Add any other color customizations here
+        );
+    return MaterialApp.router(
+      routerDelegate: AppNavigation().routerDelegate,
+      routeInformationParser: BeamerParser(),
+
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: colorScheme,
         textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
-        useMaterial3: true,
+        //useMaterial3: true,
       ),
-      home: BookTicket(),
+      // routerDelegate: GoNavigation().goRouter.routerDelegate,
+      // routeInformationParser: GoNavigation().goRouter.routeInformationParser,
+      // routeInformationProvider:
+      //     GoNavigation().goRouter.routeInformationProvider,
     );
   }
 }

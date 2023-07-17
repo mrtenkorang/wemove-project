@@ -14,8 +14,8 @@ class MobileBody extends StatelessWidget {
       children: [
         BigText(
           text: 'Transportation\nmade easy',
-          size: 50,
-          color: Colors.black,
+          bigTextSize: 50,
+          textColor: Colors.black,
           fontWeight: FontWeight.w700,
         ),
         SizedBox(
