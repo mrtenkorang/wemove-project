@@ -1,6 +1,9 @@
 import 'package:beamer/beamer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wemove/backend/authentication/user_auth.dart';
+import 'package:wemove/backend/models/users_model.dart';
 import 'package:wemove/navigations.dart';
 
 void main() async {
@@ -25,20 +28,19 @@ class WeMove extends StatelessWidget {
           secondary: Colors.green, // Customize the secondary color
           // Add any other color customizations here
         );
-    return MaterialApp.router(
-      routerDelegate: AppNavigation().routerDelegate,
-      routeInformationParser: BeamerParser(),
-
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: colorScheme,
-        textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
-        //useMaterial3: true,
+    return StreamProvider<CustomUser?>.value(
+      value: AuthService().authenticatedUser,
+      initialData: null,
+      child: MaterialApp.router(
+        routerDelegate: AppNavigation().routerDelegate,
+        routeInformationParser: BeamerParser(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: colorScheme,
+          textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+          //useMaterial3: true,
+        ),
       ),
-      // routerDelegate: GoNavigation().goRouter.routerDelegate,
-      // routeInformationParser: GoNavigation().goRouter.routeInformationParser,
-      // routeInformationProvider:
-      //     GoNavigation().goRouter.routeInformationProvider,
     );
   }
 }

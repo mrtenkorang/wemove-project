@@ -1,6 +1,10 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wemove/frontend/widgets/big_text.dart';
 
+import '../../backend/models/users_model.dart';
+import '../popups/authenticatons/login_popup.dart';
 import '../widgets/button.dart';
 import '../widgets/small_text.dart';
 
@@ -10,6 +14,7 @@ class MobileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
     return Column(
       children: [
         BigText(
@@ -30,7 +35,16 @@ class MobileBody extends StatelessWidget {
           height: 20,
         ),
         AppButton(
-          onPressed: () {},
+          onPressed: () {
+            user == null
+                ? showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return LoginPopup();
+                    },
+                  )
+                : Beamer.of(context).beamToNamed('/book-ticket');
+          },
           buttonLabelText: 'Book Ticket',
           textSize: 20,
           textColor: Colors.white,

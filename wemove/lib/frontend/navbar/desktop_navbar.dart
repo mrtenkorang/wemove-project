@@ -1,11 +1,14 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wemove/frontend/popups/authenticatons/logout_popup.dart';
 import 'package:wemove/frontend/popups/authenticatons/register_popup.dart';
+import 'package:wemove/frontend/popups/complaints/old_complaints.dart';
+import 'package:wemove/frontend/popups/profile/profile.dart';
 import 'package:wemove/frontend/widgets/text_button.dart';
 
 import '../../backend/models/users_model.dart';
 import '../popups/authenticatons/login_popup.dart';
+import '../popups/old_tickets/old_ticket.dart';
 import '../widgets/big_text.dart';
 
 class DesktopNavBar extends StatefulWidget {
@@ -39,6 +42,12 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                     AppTextButton(
                       onPressed: () {
                         //TODO: Show previous tickets popup
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return OldTicketPopup();
+                          },
+                        );
                       },
                       text: 'Tickets',
                       buttonColor: Colors.green,
@@ -47,16 +56,26 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                     ),
                     AppTextButton(
                       onPressed: () {
-                        Beamer.of(context).beamToNamed('/complain');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return OldComplaintPopup();
+                          },
+                        );
                       },
-                      text: 'Complain',
+                      text: 'Complaints',
                       buttonColor: Colors.green,
                       size: 25,
                       color: Colors.black,
                     ),
                     AppTextButton(
                       onPressed: () {
-                        //TODO: Show profile Popup
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ProfilePopup();
+                          },
+                        );
                       },
                       text: 'Profile',
                       buttonColor: Colors.green,
@@ -65,7 +84,12 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                     ),
                     AppTextButton(
                       onPressed: () {
-                        //TODO: Show Confirm Logout Popup
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return LogOutPopup();
+                          },
+                        );
                       },
                       text: 'Logout',
                       buttonColor: Colors.red,
@@ -78,7 +102,6 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                   children: [
                     AppTextButton(
                       onPressed: () {
-                        //TODO: Show previous tickets popup
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {

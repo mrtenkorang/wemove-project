@@ -10,8 +10,10 @@ import '../../widgets/small_text.dart';
 import '../../widgets/text_form_field.dart';
 
 class LoginPopup extends StatefulWidget {
+  final bool mobile;
   const LoginPopup({
     Key? key,
+    this.mobile = false,
   }) : super(key: key);
 
   @override
@@ -33,9 +35,9 @@ class _LoginPopupState extends State<LoginPopup> {
         ? LoadingIndicator()
         : Dialog(
             child: Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: widget.mobile ? 30 : 50),
               height: loginFailed ? 500 : 400,
-              width: 400,
+              width: widget.mobile ? 200 : 400,
               child: Center(
                 child: Form(
                   key: _formKey,
@@ -50,7 +52,7 @@ class _LoginPopupState extends State<LoginPopup> {
                         height: 30,
                       ),
                       Container(
-                        width: 300,
+                        width: widget.mobile ? 200 : 300,
                         child: CustomTextField(
                           // check if the text field is not empty
                           validator: (val) =>
@@ -60,7 +62,7 @@ class _LoginPopupState extends State<LoginPopup> {
                         ),
                       ),
                       Container(
-                        width: 300,
+                        width: widget.mobile ? 200 : 300,
                         child: CustomTextField(
                           obscure: true,
                           // check if the text field is not empty
@@ -71,7 +73,7 @@ class _LoginPopupState extends State<LoginPopup> {
                         ),
                       ),
                       SizedBox(
-                        height: 60,
+                        height: widget.mobile ? 20 : 60,
                       ),
                       AppButton(
                         onPressed: () async {
@@ -98,8 +100,8 @@ class _LoginPopupState extends State<LoginPopup> {
                         },
                         borderColor: Colors.green,
                         buttonLabelText: 'LOGIN',
-                        textSize: 20,
-                        buttonHeight: 80,
+                        textSize: widget.mobile ? 15 : 20,
+                        buttonHeight: widget.mobile ? 60 : 80,
                         buttonRadius: 50,
                         textColor: Colors.white,
                         backgroundColor: Colors.green,
@@ -131,7 +133,9 @@ class _LoginPopupState extends State<LoginPopup> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return RegisterPopup();
+                                        return RegisterPopup(
+                                          mobile: true,
+                                        );
                                       },
                                     );
                                   },

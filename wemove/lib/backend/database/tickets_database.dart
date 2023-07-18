@@ -34,11 +34,6 @@ class TicketDB {
   Future<void> saveFullName(
     String fullName,
   ) async {
-    // // get the last name of the user and set it as the id for the full name doc
-    // final names = fullName.split(' ');
-    // // get the index of the last name
-    // final lastName = names[names.length - 1];
-    // // set the id of the document as the users last name
     await ticketCollection!.doc('name').set({
       'fullname': fullName,
     });
@@ -58,6 +53,7 @@ class TicketDB {
       Map<String, dynamic> data =
           doc.data() as Map<String, dynamic>; // Cast to Map<String, dynamic>
       return TicketModel(
+        id: doc.id,
         passengerName: data['passenger_name'],
         passengerTelephone: data['passenger_telephone'],
         referencePersonName: data['reference_person_name'],

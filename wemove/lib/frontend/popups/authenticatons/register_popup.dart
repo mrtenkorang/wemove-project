@@ -10,7 +10,8 @@ import '../../widgets/text_form_field.dart';
 import 'login_popup.dart';
 
 class RegisterPopup extends StatefulWidget {
-  const RegisterPopup({Key? key}) : super(key: key);
+  final bool mobile;
+  const RegisterPopup({Key? key, this.mobile = false}) : super(key: key);
 
   @override
   State<RegisterPopup> createState() => _RegisterPopupState();
@@ -34,7 +35,7 @@ class _RegisterPopupState extends State<RegisterPopup> {
             child: Container(
               margin: EdgeInsets.only(top: 30),
               height: registerFailed ? 550 : 450,
-              width: 400,
+              width: widget.mobile ? 200 : 400,
               child: Center(
                 child: Form(
                   key: _formKey,
@@ -45,8 +46,11 @@ class _RegisterPopupState extends State<RegisterPopup> {
                           text: 'Register',
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Container(
-                        width: 300,
+                        width: widget.mobile ? 200 : 300,
                         child: CustomTextField(
                           // check if the text field is not empty
                           validator: (val) =>
@@ -56,7 +60,7 @@ class _RegisterPopupState extends State<RegisterPopup> {
                         ),
                       ),
                       Container(
-                        width: 300,
+                        width: widget.mobile ? 200 : 300,
                         child: CustomTextField(
                           // check if the text field is not empty
                           validator: (val) =>
@@ -66,7 +70,7 @@ class _RegisterPopupState extends State<RegisterPopup> {
                         ),
                       ),
                       Container(
-                        width: 300,
+                        width: widget.mobile ? 200 : 300,
                         child: CustomTextField(
                           obscure: true,
                           // check if the text field is not empty
@@ -77,7 +81,7 @@ class _RegisterPopupState extends State<RegisterPopup> {
                         ),
                       ),
                       SizedBox(
-                        height: 60,
+                        height: widget.mobile ? 20 : 60,
                       ),
                       AppButton(
                         onPressed: () async {
@@ -108,8 +112,8 @@ class _RegisterPopupState extends State<RegisterPopup> {
                         buttonLabelText: 'REGISTER',
                         textColor: Colors.white,
                         backgroundColor: Colors.green,
-                        textSize: 20,
-                        buttonHeight: 80,
+                        textSize: widget.mobile ? 15 : 20,
+                        buttonHeight: widget.mobile ? 60 : 80,
                         buttonRadius: 50,
                       ),
                       SizedBox(
@@ -120,7 +124,7 @@ class _RegisterPopupState extends State<RegisterPopup> {
                           text: TextSpan(
                             text: 'Already have an account?',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: widget.mobile ? 15 : 20,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Poppins',
                             ),
@@ -129,7 +133,7 @@ class _RegisterPopupState extends State<RegisterPopup> {
                                 text: 'Login',
                                 style: TextStyle(
                                   color: Colors.green,
-                                  fontSize: 20,
+                                  fontSize: widget.mobile ? 15 : 20,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
                                 ),
@@ -139,7 +143,9 @@ class _RegisterPopupState extends State<RegisterPopup> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return LoginPopup();
+                                        return LoginPopup(
+                                          mobile: true,
+                                        );
                                       },
                                     );
                                   },

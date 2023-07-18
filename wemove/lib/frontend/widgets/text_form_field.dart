@@ -6,6 +6,9 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final TextCapitalization textCapitalization;
   final String? Function(String?)? validator;
+  final IconData? icon;
+  final Color? iconColor;
+  final Function()? onTap;
   final bool obscure;
   const CustomTextField({
     Key? key,
@@ -15,6 +18,9 @@ class CustomTextField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.validator,
     this.obscure = false,
+    this.onTap,
+    this.icon,
+    this.iconColor,
   }) : super(key: key);
 
   @override
@@ -22,18 +28,24 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       width: 400,
       child: TextFormField(
+        onTap: onTap,
         obscureText: obscure,
         validator: validator,
         textCapitalization: textCapitalization,
         maxLines: maxLines,
         controller: fieldController,
         decoration: InputDecoration(
+          icon: Icon(
+            icon,
+            color: iconColor,
+          ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.green,
             ), // Set the desired active color
           ),
           labelText: fieldLabelText,
+          labelStyle: TextStyle(color: Colors.green),
           contentPadding: EdgeInsets.symmetric(vertical: 16),
         ),
       ),
