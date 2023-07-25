@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wemove/backend/database/admin_db/bus_driver.dart';
+import 'package:wemove/backend/database/admin_db/complaint_database.dart';
+import 'package:wemove/backend/database/admin_db/tickets_database.dart';
 
 import '../database/complain_database.dart';
 import '../database/tickets_database.dart';
@@ -21,7 +24,7 @@ class AuthService {
   }
 
   // Register  user with email and password
-  Future<CustomUser?> registerWithEmailAndPassword(
+  Future<CustomUser?> userRegisterWithEmailAndPassword(
       String email, String password, String fullName) async {
     try {
       UserCredential user = await _auth.createUserWithEmailAndPassword(
@@ -29,14 +32,40 @@ class AuthService {
       // create collections for the just registered user with their email as the collection name
       // and set dummy data for their first document created, which will be deleted later
       await TicketDB(userEmail: email)
-          .saveTicket('null', 'null', 'null', 'null', 'null', 'null');
+          .saveTicket('null', 'null', 'null', 'null', 'null', 'null', 'null');
       await TicketDB(userEmail: email).saveFullName(fullName);
-      await ComplainDB(userEmail: email).createComplain('null', 'null');
+      await ComplainDB(userEmail: email).createComplain('null', 'null', 'null');
       // Convert the user to the custom user, accessing only the uid and email and return it
       return _convertUser(user.user);
     } catch (e) {
       // TODO: Display a container with a formatted error message
-      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<CustomUser?> adminRegisterWithEmailAndPassword(
+      String? email, String? password, String? fullName) async {
+    try {
+      UserCredential user = await _auth.createUserWithEmailAndPassword(
+          email: email!, password: password!);
+      await AdminTicketDB().saveTicketForAdmin(
+          'null', 'null', 'null', 'null', 'null', 'null', 'null');
+      await AdminComplaintDB().createAdminComplain('null', 'null', 'null');
+      await BusDriverDB().saveBusDriverDetails(
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+      );
+      // Convert the user to the custom user, accessing only the uid and email and return it
+      return _convertUser(user.user);
+    } catch (e) {
+      // TODO: Display a container with a formatted error message
       return null;
     }
   }
@@ -51,7 +80,6 @@ class AuthService {
       return _convertUser(user.user);
     } catch (e) {
       // TODO: Display a container with a formatted error message
-      print(e.toString());
       return null;
     }
   }
@@ -61,7 +89,6 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }

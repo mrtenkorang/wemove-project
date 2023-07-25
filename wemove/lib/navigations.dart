@@ -9,9 +9,9 @@ class AppNavigation {
     initialPath: '/',
     locationBuilder: RoutesLocationBuilder(
       routes: {
-        '/': (context, state, data) => HomePage(),
-        '/book-ticket': (context, state, data) => BookTicket(),
-        '/complain': (context, state, data) => Complain(),
+        '/': (context, state, data) => const HomePage(),
+        '/book-ticket': (context, state, data) => const BookTicket(),
+        '/complain': (context, state, data) => const Complain(),
       },
     ),
   );

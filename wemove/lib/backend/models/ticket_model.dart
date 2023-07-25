@@ -6,14 +6,15 @@ class TicketModel {
   final String referencePersonTelephone;
   final String destination;
   final String departureDate;
+  final String time;
 
-  TicketModel({
-    required this.passengerName,
-    required this.passengerTelephone,
-    required this.referencePersonName,
-    required this.referencePersonTelephone,
-    required this.destination,
-    required this.departureDate,
-    required this.id,
-  });
+  TicketModel(
+      {required this.passengerName,
+      required this.passengerTelephone,
+      required this.referencePersonName,
+      required this.referencePersonTelephone,
+      required this.destination,
+      required this.departureDate,
+      required this.id,
+      required this.time});
 }

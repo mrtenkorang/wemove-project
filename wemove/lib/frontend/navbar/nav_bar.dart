@@ -10,9 +10,9 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 800) {
-        return DesktopNavBar();
+        return const DesktopNavBar();
       } else {
-        return MobileNavBar();
+        return const MobileNavBar();
       }
     });
   }

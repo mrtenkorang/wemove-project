@@ -9,21 +9,23 @@ class OldTicketCard extends StatelessWidget {
   final String refPerName;
   final String refPerTel;
   final String dDate;
-  const OldTicketCard(
-      {Key? key,
-      required this.destination,
-      required this.name,
-      required this.telephone,
-      required this.refPerName,
-      required this.refPerTel,
-      required this.dDate})
-      : super(key: key);
+  final String dTime;
+  const OldTicketCard({
+    Key? key,
+    required this.destination,
+    required this.name,
+    required this.telephone,
+    required this.refPerName,
+    required this.refPerTel,
+    required this.dDate,
+    required this.dTime,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 20),
-      height: 200,
+      height: 250,
       //width: 350,
       child: Card(
         margin: const EdgeInsets.only(
@@ -31,35 +33,53 @@ class OldTicketCard extends StatelessWidget {
           right: 50,
         ),
         color: Colors.grey[200],
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              height: 30,
-              child: Center(child: BigText(text: destination)),
-            ),
-            AppSmallText(
-              text: 'Name:     $name',
-              size: 20,
-            ),
-            AppSmallText(
-              text: 'Telephone:     $telephone',
-              size: 20,
-            ),
-            AppSmallText(
-              text: "Ref. Person's name:     $refPerName",
-              size: 20,
-            ),
-            AppSmallText(
-              text: "Ref. Person's tel:     $refPerTel",
-              size: 20,
-            ),
-            AppSmallText(
-              text: 'Departure date:     $dDate',
-              size: 20,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 20.0, bottom: 1.0, top: 5.0, right: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: BigText(
+                      text: destination,
+                      textColor: Colors.green,
+                    ),
+                  ),
+                  AppSmallText(
+                    text: 'Name: $name',
+                    size: 15,
+                  ),
+                  AppSmallText(
+                    text: 'Telephone: $telephone',
+                    size: 15,
+                  ),
+                  AppSmallText(
+                    text: "Ref. Person's name: ${refPerName.split(" ")[0]}",
+                    size: 15,
+                  ),
+                  AppSmallText(
+                    text: "Ref. Person's tel: $refPerTel",
+                    size: 15,
+                  ),
+                  AppSmallText(
+                    text: 'Departure date: $dDate',
+                    size: 15,
+                  ),
+                  AppSmallText(
+                    text: dTime,
+                    size: 25,
+                    color: Colors.green,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

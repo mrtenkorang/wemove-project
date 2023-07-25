@@ -13,8 +13,8 @@ class _ProfilePopupState extends State<ProfilePopup> {
   late int firstItem;
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Container(
+    return const Dialog(
+      child: SizedBox(
         height: 700,
         width: 500,
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BigText extends StatelessWidget {
-  final String text;
+  final String? text;
   final double bigTextSize;
   final FontWeight fontWeight;
   final Color textColor;
@@ -18,7 +18,7 @@ class BigText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text!,
       textAlign: textAlign,
       style: TextStyle(
         fontSize: bigTextSize,

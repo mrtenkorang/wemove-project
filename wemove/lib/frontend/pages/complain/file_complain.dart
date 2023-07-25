@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:wemove/backend/database/admin_db/complaint_database.dart';
 import 'package:wemove/frontend/widgets/loading_indicator.dart';
 
 import '../../../backend/database/complain_database.dart';
@@ -33,18 +35,19 @@ class _FileComplainFormState extends State<FileComplainForm> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return LoginPopup();
+          return const LoginPopup();
         },
       );
     }
     ComplainDB complainDB = ComplainDB(userEmail: user!.email);
-    TextEditingController titileController = TextEditingController();
+    AdminComplaintDB adminComplaintDB = AdminComplaintDB();
+    TextEditingController titleController = TextEditingController();
     TextEditingController detailController = TextEditingController();
     ();
     return loading
-        ? LoadingIndicator()
+        ? const LoadingIndicator()
         : Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 30,
               vertical: 60,
             ),
@@ -55,22 +58,22 @@ class _FileComplainFormState extends State<FileComplainForm> {
                   width: widget.width,
                   child: Column(
                     children: [
-                      BigText(
-                        text: 'FILE COMPLAIN',
+                      const BigText(
+                        text: 'FILE COMPLAINT',
                         bigTextSize: 50,
                         textColor: Colors.green,
                         fontWeight: FontWeight.w800,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       CustomTextField(
                         validator: (val) =>
                             val!.isEmpty ? 'This field is required' : null,
-                        fieldController: titileController,
+                        fieldController: titleController,
                         fieldLabelText: 'Title',
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       CustomTextField(
@@ -80,18 +83,31 @@ class _FileComplainFormState extends State<FileComplainForm> {
                         fieldLabelText: 'details',
                         maxLines: 5,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       AppButton(
                         onPressed: () async {
-                          setState(() {
-                            loading = true;
-                          });
                           if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              loading = true;
+                            });
+
                             await complainDB.createComplain(
-                              titileController.text,
+                              titleController.text,
                               detailController.text,
+                              // the date is added automatically, and it is set to the
+                              // recent date
+                              DateFormat('yyyy-MM-dd').format(
+                                DateTime.now(),
+                              ),
+                            );
+                            await adminComplaintDB.createAdminComplain(
+                              titleController.text,
+                              detailController.text,
+                              DateFormat('yyyy-MM-dd').format(
+                                DateTime.now(),
+                              ),
                             );
                             setState(
                               () {
@@ -112,11 +128,11 @@ class _FileComplainFormState extends State<FileComplainForm> {
                         buttonHeight: 80,
                         buttonRadius: 50,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       checkSent
-                          ? Container(
+                          ? SizedBox(
                               height: 70,
                               child: Center(
                                 child: AppSmallText(

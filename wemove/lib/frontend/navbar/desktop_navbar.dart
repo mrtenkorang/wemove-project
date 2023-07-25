@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:wemove/frontend/popups/authenticatons/logout_popup.dart';
 import 'package:wemove/frontend/popups/authenticatons/register_popup.dart';
 import 'package:wemove/frontend/popups/complaints/old_complaints.dart';
-import 'package:wemove/frontend/popups/profile/profile.dart';
 import 'package:wemove/frontend/widgets/text_button.dart';
 
 import '../../backend/models/users_model.dart';
@@ -25,14 +24,14 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          BigText(
+          const BigText(
             text: 'WEMOVE',
             fontWeight: FontWeight.w900,
-            bigTextSize: 50,
+            bigTextSize: 40,
             textColor: Colors.green,
           ),
           user != null
@@ -45,7 +44,7 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return OldTicketPopup();
+                            return const OldTicketPopup();
                           },
                         );
                       },
@@ -59,7 +58,7 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return OldComplaintPopup();
+                            return const OldComplaintPopup();
                           },
                         );
                       },
@@ -73,21 +72,7 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return ProfilePopup();
-                          },
-                        );
-                      },
-                      text: 'Profile',
-                      buttonColor: Colors.green,
-                      size: 25,
-                      color: Colors.black,
-                    ),
-                    AppTextButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return LogOutPopup();
+                            return const LogOutPopup();
                           },
                         );
                       },
@@ -105,7 +90,7 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return LoginPopup();
+                            return const LoginPopup();
                           },
                         );
                       },
@@ -119,7 +104,7 @@ class _DesktopNavBarState extends State<DesktopNavBar> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return RegisterPopup();
+                            return const RegisterPopup();
                           },
                         );
                       },

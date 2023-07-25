@@ -38,8 +38,23 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
-</head>
-<body>
+  <style>
+      .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex; /* Default Axis is X*/
+        justify-content: center; /* Main Axis */
+        align-items: center; /* Cross Axis */
+      }
+      .indicator{
+        width: 20vw;
+      }
+  </style>
+  </head>
+<body style="overflow:hidden">
+  <div id="loading_indicator" class="container">
+    <img class="indicator" src="./assets/Man Traveling with Luggage.gif" />
+  </div>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -74,5 +89,15 @@
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+</script>
+<script>
+  window.onLoad = function(){
+  setTimeout(function(){
+    var loadingIndicator = document.getElementById("loading_indicator");
+    if(loadingIndicator){
+    loadingIndicator.remove();
+   }
+  },10000);
+  }
 </script>
 </html>

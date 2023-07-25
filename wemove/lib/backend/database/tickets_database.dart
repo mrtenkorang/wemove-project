@@ -20,6 +20,7 @@ class TicketDB {
     String referencePersonName,
     String referencePersonTelephone,
     String departureDate,
+    String time,
   ) async {
     await ticketCollection!.doc().set({
       'destination': destination,
@@ -28,6 +29,7 @@ class TicketDB {
       'reference_person_name': referencePersonName,
       'reference_person_telephone': referencePersonTelephone,
       'departure_date': departureDate,
+      'time': time,
     });
   }
 
@@ -54,12 +56,13 @@ class TicketDB {
           doc.data() as Map<String, dynamic>; // Cast to Map<String, dynamic>
       return TicketModel(
         id: doc.id,
-        passengerName: data['passenger_name'],
-        passengerTelephone: data['passenger_telephone'],
-        referencePersonName: data['reference_person_name'],
-        referencePersonTelephone: data['reference_person_telephone'],
-        destination: data['destination'],
-        departureDate: data['departure_date'],
+        passengerName: data['passenger_name'] ?? '',
+        passengerTelephone: data['passenger_telephone'] ?? '',
+        referencePersonName: data['reference_person_name'] ?? '',
+        referencePersonTelephone: data['reference_person_telephone'] ?? '',
+        destination: data['destination'] ?? '',
+        departureDate: data['departure_date'] ?? '',
+        time: data['time'] ?? '',
       );
     }).toList();
   }

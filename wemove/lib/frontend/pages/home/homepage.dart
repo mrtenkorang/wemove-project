@@ -7,16 +7,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          //todo: use the wrapper widget to return the home screen
-          child: Column(
-            children: [
-              NavBar(),
-              AppBody(),
-            ],
-          ),
+        child: Column(
+          children: [
+            NavBar(),
+            AppBody(),
+          ],
         ),
       ),
     );

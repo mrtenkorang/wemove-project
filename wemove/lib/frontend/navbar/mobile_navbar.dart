@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:wemove/frontend/popups/authenticatons/login_popup.dart';
 import 'package:wemove/frontend/popups/authenticatons/register_popup.dart';
 import 'package:wemove/frontend/popups/complaints/old_complaints.dart';
-import 'package:wemove/frontend/popups/profile/profile.dart';
 
 import '../../backend/models/users_model.dart';
+import '../popups/authenticatons/logout_popup.dart';
 import '../popups/old_tickets/old_ticket.dart';
 import '../widgets/big_text.dart';
 import '../widgets/text_button.dart';
@@ -17,16 +17,16 @@ class MobileNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
       child: Column(
         children: [
-          BigText(
+          const BigText(
             text: 'WEMOVE',
             fontWeight: FontWeight.w900,
-            bigTextSize: 30,
+            bigTextSize: 50,
             textColor: Colors.green,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           user != null
@@ -38,7 +38,7 @@ class MobileNavBar extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return OldTicketPopup();
+                            return const OldTicketPopup();
                           },
                         );
                       },
@@ -51,7 +51,7 @@ class MobileNavBar extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return OldComplaintPopup();
+                            return const OldComplaintPopup();
                           },
                         );
                       },
@@ -64,13 +64,14 @@ class MobileNavBar extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return ProfilePopup();
+                            return const LogOutPopup();
                           },
                         );
                       },
-                      text: 'Profile',
-                      size: 20,
-                      color: Colors.green,
+                      text: 'Logout',
+                      buttonColor: Colors.red,
+                      size: 25,
+                      color: Colors.red,
                     ),
                   ],
                 )
@@ -82,9 +83,7 @@ class MobileNavBar extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return LoginPopup(
-                              mobile: true,
-                            );
+                            return const LoginPopup();
                           },
                         );
                       },
@@ -97,7 +96,7 @@ class MobileNavBar extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return RegisterPopup(
+                            return const RegisterPopup(
                               mobile: true,
                             );
                           },

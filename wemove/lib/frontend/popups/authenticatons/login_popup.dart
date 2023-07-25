@@ -10,10 +10,8 @@ import '../../widgets/small_text.dart';
 import '../../widgets/text_form_field.dart';
 
 class LoginPopup extends StatefulWidget {
-  final bool mobile;
   const LoginPopup({
     Key? key,
-    this.mobile = false,
   }) : super(key: key);
 
   @override
@@ -25,66 +23,76 @@ class _LoginPopupState extends State<LoginPopup> {
   String error = '';
   bool loading = false;
   bool loginFailed = false;
+  dynamic result;
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
 
-    TextEditingController _passwordLoginController = TextEditingController();
-    TextEditingController _emailLoginController = TextEditingController();
+    TextEditingController passwordLoginController = TextEditingController();
+    TextEditingController emailLoginController = TextEditingController();
     return loading
-        ? LoadingIndicator()
+        ? const LoadingIndicator()
         : Dialog(
             child: Container(
-              margin: EdgeInsets.only(top: widget.mobile ? 30 : 50),
+              margin: const EdgeInsets.only(top: 50),
               height: loginFailed ? 500 : 400,
-              width: widget.mobile ? 200 : 400,
+              width: 400,
               child: Center(
                 child: Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     children: [
-                      Container(
-                        child: BigText(
-                          text: 'Login',
-                        ),
+                      const BigText(
+                        text: 'Login',
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
-                      Container(
-                        width: widget.mobile ? 200 : 300,
+                      SizedBox(
+                        width: 300,
                         child: CustomTextField(
+                          icon: Icons.email_rounded,
+                          iconColor: Colors.green,
                           // check if the text field is not empty
                           validator: (val) =>
                               val!.isEmpty ? 'This field is required' : null,
-                          fieldController: _emailLoginController,
+                          fieldController: emailLoginController,
                           fieldLabelText: 'Enter your email',
                         ),
                       ),
-                      Container(
-                        width: widget.mobile ? 200 : 300,
+                      SizedBox(
+                        width: 300,
                         child: CustomTextField(
+                          icon: Icons.password_rounded,
+                          iconColor: Colors.green,
                           obscure: true,
                           // check if the text field is not empty
                           validator: (val) =>
                               val!.isEmpty ? 'This field is required' : null,
-                          fieldController: _passwordLoginController,
+                          fieldController: passwordLoginController,
                           fieldLabelText: 'Enter your password',
                         ),
                       ),
-                      SizedBox(
-                        height: widget.mobile ? 20 : 60,
+                      const SizedBox(
+                        height: 60,
                       ),
                       AppButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
+                          if (formKey.currentState!.validate()) {
                             setState(() {
                               loading = true;
                             });
-                            dynamic result =
-                                await _auth.loginWithEmailAndPassword(
-                                    _emailLoginController.text,
-                                    _passwordLoginController.text);
+                            if (emailLoginController.text ==
+                                'wemove@gmail.com') {
+                              result = await _auth.loginWithEmailAndPassword(
+                                  emailLoginController.text,
+                                  passwordLoginController.text);
+                            } else {
+                              result = await _auth.loginWithEmailAndPassword(
+                                  emailLoginController.text,
+                                  passwordLoginController.text);
+                            }
+
                             if (result == null) {
                               setState(() {
                                 error =
@@ -92,7 +100,6 @@ class _LoginPopupState extends State<LoginPopup> {
                                 loginFailed = true;
                                 loading = false;
                               });
-                              print(result);
                             } else {
                               Navigator.pop(context);
                             }
@@ -100,56 +107,54 @@ class _LoginPopupState extends State<LoginPopup> {
                         },
                         borderColor: Colors.green,
                         buttonLabelText: 'LOGIN',
-                        textSize: widget.mobile ? 15 : 20,
-                        buttonHeight: widget.mobile ? 60 : 80,
+                        textSize: 20,
+                        buttonHeight: 80,
                         buttonRadius: 50,
                         textColor: Colors.white,
                         backgroundColor: Colors.green,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Need an account?',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Poppins',
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'Register',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Poppins',
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return RegisterPopup(
-                                          mobile: true,
-                                        );
-                                      },
-                                    );
-                                  },
-                              ),
-                            ],
+                      RichText(
+                        text: TextSpan(
+                          text: 'Need an account?',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
                           ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Register',
+                              style: const TextStyle(
+                                color: Colors.green,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const RegisterPopup(
+                                        mobile: true,
+                                      );
+                                    },
+                                  );
+                                },
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       loginFailed
                           ? Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: const EdgeInsets.only(top: 30),
                               height: 60,
                               child: Center(
                                 child: AppSmallText(

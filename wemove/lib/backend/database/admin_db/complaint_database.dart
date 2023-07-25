@@ -1,21 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wemove/backend/models/complain_model.dart';
 
-class ComplainDB {
-  String? userEmail;
-  CollectionReference? complainCollection;
-
-  ComplainDB({this.userEmail}) {
-    // Initialize the complainCollection inside the constructor
-    complainCollection =
-        FirebaseFirestore.instance.collection('$userEmail - complains');
-  }
+class AdminComplaintDB {
+  CollectionReference? adminComplainCollection =
+      FirebaseFirestore.instance.collection('admin - complaints');
 
   // Create and update complains for users
-  Future<void> createComplain(
+  Future<void> createAdminComplain(
       String complainTitle, String complainDetail, String complainDate) async {
-    if (complainCollection != null) {
-      await complainCollection!.doc().set({
+    if (adminComplainCollection != null) {
+      await adminComplainCollection!.doc().set({
         'complain_date': complainDate,
         'complain_title': complainTitle,
         'complain_detail': complainDetail,
@@ -23,8 +17,8 @@ class ComplainDB {
     }
   }
 
-  // get complains
-  Iterable<ComplainModel> _complainFromDB(QuerySnapshot snapshot) {
+  // get complains from firebase firestore
+  Iterable<ComplainModel> _adminComplainFromDB(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
       return ComplainModel(
@@ -36,7 +30,7 @@ class ComplainDB {
   }
 
   // Listen to changes in the complains document
-  Stream<Iterable<ComplainModel>> get complains {
-    return complainCollection!.snapshots().map(_complainFromDB);
+  Stream<Iterable<ComplainModel>> get adminComplains {
+    return adminComplainCollection!.snapshots().map(_adminComplainFromDB);
   }
 }

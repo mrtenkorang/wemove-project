@@ -6,10 +6,10 @@ class CustomHorizontalDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: 2,
-      child: Divider(
+      child: const Divider(
         thickness: 1.0,
         color: Colors.black54, // Set the color of the vertical line
       ),

@@ -1,8 +1,9 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:wemove/frontend/pages/complain/complains.dart';
+import 'package:wemove/frontend/footer/app_footer.dart';
 import 'package:wemove/frontend/popups/authenticatons/login_popup.dart';
+import 'package:wemove/frontend/routes/route_constants.dart';
 import 'package:wemove/frontend/widgets/big_text.dart';
 import 'package:wemove/frontend/widgets/button.dart';
 import 'package:wemove/frontend/widgets/small_text.dart';
@@ -17,7 +18,7 @@ class DesktopBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 70),
       child: Column(
         children: [
           Row(
@@ -27,18 +28,18 @@ class DesktopBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BigText(
+                  const BigText(
                     text: 'Transportation\nmade easy',
                     bigTextSize: 50,
                     textColor: Colors.black,
                     fontWeight: FontWeight.w900,
                   ),
-                  AppSmallText(
+                  const AppSmallText(
                     text:
                         'The leading transportation agency in Ghana.\nTravel with us to experience the world of comfort.',
                     size: 18,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Row(
@@ -49,10 +50,11 @@ class DesktopBody extends StatelessWidget {
                               ? showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return LoginPopup();
+                                    return const LoginPopup();
                                   },
                                 )
-                              : Beamer.of(context).beamToNamed('/book-ticket');
+                              : GoRouter.of(context)
+                                  .goNamed(AppRouteConstants.bookTicketName);
                         },
                         buttonLabelText: 'Book Ticket',
                         textSize: 20,
@@ -62,7 +64,7 @@ class DesktopBody extends StatelessWidget {
                         borderColor: Colors.green,
                         buttonRadius: 50,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 30,
                       ),
                       AppButton(
@@ -71,10 +73,11 @@ class DesktopBody extends StatelessWidget {
                               ? showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return Complain();
+                                    return const LoginPopup();
                                   },
                                 )
-                              : Beamer.of(context).beamToNamed('/complain');
+                              : GoRouter.of(context)
+                                  .goNamed(AppRouteConstants.complaintName);
                         },
                         buttonLabelText: 'Complaint',
                         textSize: 20,
@@ -88,9 +91,9 @@ class DesktopBody extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 width: width,
-                child: Image(
+                child: const Image(
                   image: AssetImage(
                     'assets/images/bus-blue.png',
                   ),
@@ -98,11 +101,10 @@ class DesktopBody extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.green,
+          const SizedBox(
+            height: 60,
           ),
+          const AppFooter(),
         ],
       ),
     );

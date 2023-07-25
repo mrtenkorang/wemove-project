@@ -12,14 +12,14 @@ class LogOutPopup extends StatefulWidget {
 }
 
 class _LogOutPopupState extends State<LogOutPopup> {
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
   bool loading = false;
   @override
   Widget build(BuildContext context) {
     return loading
-        ? LoadingIndicator()
+        ? const LoadingIndicator()
         : Dialog(
-            child: Container(
+            child: SizedBox(
               height: 100,
               width: 100,
               child: Center(

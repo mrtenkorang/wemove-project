@@ -21,81 +21,96 @@ class _RegisterPopupState extends State<RegisterPopup> {
   final AuthService _auth = AuthService();
   String error = '';
   bool loading = false;
+  dynamic result;
   // A variable to check if the registration process failed
   bool registerFailed = false;
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    TextEditingController _fullNameController = TextEditingController();
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    TextEditingController fullNameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return loading
-        ? LoadingIndicator()
+        ? const LoadingIndicator()
         : Dialog(
             child: Container(
-              margin: EdgeInsets.only(top: 30),
+              margin: const EdgeInsets.only(top: 30),
               height: registerFailed ? 550 : 450,
-              width: widget.mobile ? 200 : 400,
+              width: 400,
               child: Center(
                 child: Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     children: [
-                      Container(
-                        child: BigText(
-                          text: 'Register',
-                        ),
+                      const BigText(
+                        text: 'Register',
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        width: widget.mobile ? 200 : 300,
+                      SizedBox(
+                        width: 300,
                         child: CustomTextField(
+                          icon: Icons.person,
+                          iconColor: Colors.green,
                           // check if the text field is not empty
                           validator: (val) =>
                               val!.isEmpty ? 'This field is required' : null,
-                          fieldController: _fullNameController,
+                          fieldController: fullNameController,
                           fieldLabelText: 'Enter your full name',
                         ),
                       ),
-                      Container(
-                        width: widget.mobile ? 200 : 300,
+                      SizedBox(
+                        width: 300,
                         child: CustomTextField(
+                          icon: Icons.email_rounded,
+                          iconColor: Colors.green,
                           // check if the text field is not empty
                           validator: (val) =>
                               val!.isEmpty ? 'This field is required' : null,
-                          fieldController: _emailController,
+                          fieldController: emailController,
                           fieldLabelText: 'Enter your email',
                         ),
                       ),
-                      Container(
-                        width: widget.mobile ? 200 : 300,
+                      SizedBox(
+                        width: 300,
                         child: CustomTextField(
+                          icon: Icons.password_rounded,
+                          iconColor: Colors.green,
                           obscure: true,
                           // check if the text field is not empty
                           validator: (val) =>
                               val!.isEmpty ? 'This field is required' : null,
-                          fieldController: _passwordController,
+                          fieldController: passwordController,
                           fieldLabelText: 'Enter your password',
                         ),
                       ),
-                      SizedBox(
-                        height: widget.mobile ? 20 : 60,
+                      const SizedBox(
+                        height: 60,
                       ),
                       AppButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
+                          if (formKey.currentState!.validate()) {
                             setState(() {
                               loading = true;
                             });
-                            dynamic result =
-                                await _auth.registerWithEmailAndPassword(
-                              _emailController.text,
-                              _passwordController.text,
-                              _fullNameController
-                                  .text, // to be accessed by the fullname db
-                            );
+                            if (emailController.text == 'wemove@gmail.com') {
+                              result =
+                                  await _auth.adminRegisterWithEmailAndPassword(
+                                emailController.text,
+                                passwordController.text,
+                                fullNameController.text,
+                              );
+                            } else {
+                              result =
+                                  await _auth.userRegisterWithEmailAndPassword(
+                                emailController.text,
+                                passwordController.text,
+                                fullNameController
+                                    .text, // to be accessed by the fullname db
+                              );
+                            }
+
                             if (result == null) {
                               setState(() {
                                 loading = false;
@@ -112,51 +127,47 @@ class _RegisterPopupState extends State<RegisterPopup> {
                         buttonLabelText: 'REGISTER',
                         textColor: Colors.white,
                         backgroundColor: Colors.green,
-                        textSize: widget.mobile ? 15 : 20,
-                        buttonHeight: widget.mobile ? 60 : 80,
+                        textSize: 20,
+                        buttonHeight: 80,
                         buttonRadius: 50,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Already have an account?',
-                            style: TextStyle(
-                              fontSize: widget.mobile ? 15 : 20,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Poppins',
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'Login',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: widget.mobile ? 15 : 20,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Poppins',
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return LoginPopup(
-                                          mobile: true,
-                                        );
-                                      },
-                                    );
-                                  },
-                              ),
-                            ],
+                      RichText(
+                        text: TextSpan(
+                          text: 'Already have an account?',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
                           ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Login',
+                              style: const TextStyle(
+                                color: Colors.green,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const LoginPopup();
+                                    },
+                                  );
+                                },
+                            ),
+                          ],
                         ),
                       ),
                       registerFailed
                           ? Container(
-                              margin: EdgeInsets.only(top: 30),
+                              margin: const EdgeInsets.only(top: 30),
                               height: 30,
                               child: Center(
                                 child: AppSmallText(
